@@ -1,13 +1,37 @@
+import os
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-from datetime import datetime
+import numpy as np
+import random
+from datetime import datetime, timedelta
 
-# Page Config
-st.set_page_config(page_title="Executive Sales Insights", layout="wide")
+# --- AUTOMATIC DATA GENERATOR ---
+def create_data_if_missing():
+    if not os.path.exists('ecommerce_data.csv'):
+        # Generate 1,000 rows of synthetic data if the file is missing
+        categories = ['Electronics', 'Home & Kitchen', 'Fashion', 'Beauty', 'Sports']
+        data = []
+        for i in range(1000):
+            cat = random.choice(categories)
+            price = random.uniform(10, 500) if cat != 'Electronics' else random.uniform(100, 1500)
+            data.append({
+                'Order_ID': f"ORD-{1000+i}",
+                'Date': datetime(2023, 1, 1) + timedelta(days=random.randint(0, 365)),
+                'Category': cat,
+                'Revenue': price * random.randint(1, 5),
+                'Region': random.choice(['North', 'South', 'East', 'West', 'Central']),
+                'Channel': random.choice(['Direct', 'Social', 'Email']),
+                'Payment': random.choice(['Credit Card', 'PayPal', 'Crypto']),
+                'Customer_Age': random.randint(18, 70),
+                'Rating': random.randint(1, 5),
+                'Delivery_Days': random.randint(1, 10)
+            })
+        df_new = pd.DataFrame(data)
+        df_new.to_csv('ecommerce_data.csv', index=False)
 
-# Load Data
+# Call the generator before loading
+create_data_if_missing()
+
 @st.cache_data
 def load_data():
     df = pd.read_csv('ecommerce_data.csv')
@@ -15,7 +39,6 @@ def load_data():
     return df
 
 df = load_data()
-
 # Sidebar Navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Executive Overview", "Sales Trends", "Customer Behavior", "Product Analysis", "Regional Insights"])
