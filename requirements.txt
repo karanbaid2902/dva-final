@@ -1,5 +1,18 @@
-streamlit
-pandas
-plotly
-faker
-numpy
+# Smart Manufacturing Dashboard Dependencies
+# TitanForge Industries - IoT Analytics Platform
+
+# Core Framework
+streamlit==1.31.0
+
+# Data Processing
+pandas==2.1.4
+numpy==1.26.3
+
+# Visualization
+plotly==5.18.0
+
+# Machine Learning
+scikit-learn==1.4.0
+
+# Date/Time utilities
+python-dateutil==2.8.2
