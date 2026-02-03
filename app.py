@@ -50,16 +50,30 @@ st.markdown("""
         border-radius: 0 0 20px 20px;
         margin: -1rem -1rem 1.5rem -1rem;
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .app-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        opacity: 0.3;
     }
     
     .app-title {
-        font-size: 2.2rem;
+        font-size: 2.4rem;
         font-weight: 800;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin: 0;
         display: inline-block;
+        text-shadow: 0 0 30px rgba(102, 126, 234, 0.3);
     }
     
     .app-subtitle {
@@ -91,49 +105,112 @@ st.markdown("""
         letter-spacing: 1px;
     }
     
+    /* Glassmorphism Cards */
+    .glass-card {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+    
     /* Navigation Tabs Styling */
     .stTabs [data-baseweb="tab-list"] {
         gap: 8px;
         background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        padding: 8px 15px;
+        padding: 10px 15px;
         border-radius: 15px;
         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
     
     .stTabs [data-baseweb="tab"] {
-        height: 45px;
-        padding: 0 20px;
+        height: 50px;
+        padding: 0 25px;
         font-weight: 600;
-        border-radius: 10px;
+        border-radius: 12px;
         color: #8892b0;
         background: transparent;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 0.9rem;
     }
     
     .stTabs [data-baseweb="tab"]:hover {
         background: rgba(102, 126, 234, 0.2);
         color: #fff;
+        transform: translateY(-2px);
     }
     
     .stTabs [aria-selected="true"] {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
         color: white !important;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
     }
     
-    /* KPI Cards */
+    /* KPI Cards - Enhanced */
     .kpi-card {
         background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        border-radius: 15px;
-        padding: 20px;
+        border-radius: 20px;
+        padding: 25px;
         color: white;
         box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-        border: 1px solid rgba(255,255,255,0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid rgba(255,255,255,0.08);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .kpi-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
     }
     
     .kpi-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 40px rgba(102, 126, 234, 0.3);
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 50px rgba(102, 126, 234, 0.35);
+        border-color: rgba(102, 126, 234, 0.3);
+    }
+    
+    /* Notification Toast */
+    .notification-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 25px;
+        border-radius: 12px;
+        color: white;
+        font-weight: 600;
+        z-index: 9999;
+        animation: slideInRight 0.5s ease, fadeOut 0.5s ease 4.5s forwards;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    
+    .notification-success {
+        background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    }
+    
+    .notification-warning {
+        background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+    }
+    
+    .notification-error {
+        background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    }
+    
+    @keyframes slideInRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes fadeOut {
+        from { opacity: 1; }
+        to { opacity: 0; }
     }
     
     /* Status Indicators */
@@ -141,10 +218,41 @@ st.markdown("""
     .status-warning { color: #ffd93d; font-weight: bold; }
     .status-critical { color: #ff6b6b; font-weight: bold; }
     
-    /* Metrics Styling */
+    /* Status Dot with Glow */
+    .status-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 8px;
+        box-shadow: 0 0 10px currentColor;
+    }
+    
+    .status-dot.online {
+        background: #64ffda;
+        box-shadow: 0 0 15px #64ffda, 0 0 30px #64ffda;
+    }
+    
+    .status-dot.warning {
+        background: #ffd93d;
+        box-shadow: 0 0 15px #ffd93d;
+    }
+    
+    .status-dot.critical {
+        background: #ff6b6b;
+        box-shadow: 0 0 15px #ff6b6b;
+        animation: pulse-critical 1s infinite;
+    }
+    
+    @keyframes pulse-critical {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(1.2); opacity: 0.8; }
+    }
+    
+    /* Metrics Styling - Enhanced */
     div[data-testid="stMetricValue"] {
-        font-size: 2rem;
-        font-weight: 700;
+        font-size: 2.2rem;
+        font-weight: 800;
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -153,11 +261,27 @@ st.markdown("""
     div[data-testid="stMetricLabel"] {
         font-weight: 600;
         color: #4a5568;
+        font-size: 0.9rem;
     }
     
-    /* Sidebar Styling */
+    div[data-testid="stMetricDelta"] {
+        font-weight: 600;
+    }
+    
+    /* Sidebar Styling - Enhanced */
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    }
+    
+    [data-testid="stSidebar"]::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        pointer-events: none;
     }
     
     [data-testid="stSidebar"] .stMarkdown {
@@ -170,34 +294,53 @@ st.markdown("""
         color: #fff !important;
     }
     
-    /* Buttons */
+    /* Buttons - Enhanced */
     .stButton > button {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         color: white;
         border: none;
-        border-radius: 10px;
-        padding: 10px 20px;
+        border-radius: 12px;
+        padding: 12px 24px;
         font-weight: 600;
-        transition: all 0.3s ease;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .stButton > button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
     }
     
     .stButton > button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
     }
     
-    /* Input Fields */
+    .stButton > button:hover::before {
+        left: 100%;
+    }
+    
+    /* Input Fields - Enhanced */
     .stTextInput > div > div > input {
-        border-radius: 10px;
+        border-radius: 12px;
         border: 2px solid #e2e8f0;
-        padding: 10px 15px;
-        transition: border-color 0.3s ease;
+        padding: 12px 18px;
+        transition: all 0.3s ease;
+        font-size: 1rem;
     }
     
     .stTextInput > div > div > input:focus {
         border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+    }
     }
     
     /* Select Boxes */
@@ -414,19 +557,70 @@ def show_login_page():
     col1, col2, col3 = st.columns([1, 2, 1])
     
     with col2:
+        # Animated logo and header
         st.markdown("""
-        <div style="text-align: center; padding: 60px 0 30px 0;">
-            <div style="font-size: 5rem; margin-bottom: 20px;">🏭</div>
-            <h1 style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">TitanForge Industries</h1>
-            <p style="color: #8892b0; font-size: 1rem;">Smart Manufacturing & IoT Analytics Platform</p>
+        <style>
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-10px); }
+            }
+            @keyframes glow {
+                0%, 100% { filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5)); }
+                50% { filter: drop-shadow(0 0 25px rgba(118, 75, 162, 0.8)); }
+            }
+            .floating-logo {
+                animation: float 3s ease-in-out infinite, glow 2s ease-in-out infinite;
+            }
+            .stat-item {
+                display: inline-block;
+                text-align: center;
+                padding: 0 20px;
+            }
+            .stat-value {
+                font-size: 1.5rem;
+                font-weight: 700;
+                color: #64ffda;
+            }
+            .stat-label {
+                font-size: 0.7rem;
+                color: #8892b0;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+        </style>
+        <div style="text-align: center; padding: 40px 0 30px 0;">
+            <div class="floating-logo" style="font-size: 5rem; margin-bottom: 20px;">🏭</div>
+            <h1 style="font-size: 2.8rem; font-weight: 800; background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 10px;">TitanForge Industries</h1>
+            <p style="color: #8892b0; font-size: 1.1rem; margin-bottom: 25px;">Smart Manufacturing & IoT Analytics Platform</p>
+            <div style="display: flex; justify-content: center; gap: 30px; margin-top: 20px;">
+                <div class="stat-item">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">Global Facilities</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">99.7%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">52</div>
+                    <div class="stat-label">IoT Sensors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">4</div>
+                    <div class="stat-label">AI Models</div>
+                </div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # Login card
+        # Login card with enhanced styling
         st.markdown("""
-        <div style="background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); padding: 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-top: 20px;">
-            <h3 style="color: #fff; text-align: center; margin-bottom: 5px;">Welcome Back</h3>
-            <p style="color: #8892b0; text-align: center; margin-bottom: 25px; font-size: 0.9rem;">Sign in to access your dashboard</p>
+        <div style="background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); padding: 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); margin-top: 20px; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 10px 20px; border-radius: 20px; font-size: 0.75rem; color: white; font-weight: 600;">🔐 SECURE ACCESS</span>
+            </div>
+            <h3 style="color: #fff; text-align: center; margin-bottom: 5px; font-size: 1.5rem;">Welcome Back</h3>
+            <p style="color: #8892b0; text-align: center; margin-bottom: 25px; font-size: 0.9rem;">Sign in to access your manufacturing dashboard</p>
         </div>
         """, unsafe_allow_html=True)
         
@@ -466,11 +660,38 @@ def show_login_page():
                 else:
                     st.warning("⚠️ Please enter both username and password")
         
+        # Feature highlights
+        st.markdown("""
+        <div style="margin-top: 30px; padding: 20px; background: rgba(100, 255, 218, 0.05); border-radius: 15px; border: 1px solid rgba(100, 255, 218, 0.1);">
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 15px;">
+                <div style="text-align: center; flex: 1; min-width: 120px;">
+                    <div style="font-size: 1.5rem;">📊</div>
+                    <div style="color: #64ffda; font-size: 0.75rem; font-weight: 600;">Real-Time Analytics</div>
+                </div>
+                <div style="text-align: center; flex: 1; min-width: 120px;">
+                    <div style="font-size: 1.5rem;">🤖</div>
+                    <div style="color: #64ffda; font-size: 0.75rem; font-weight: 600;">AI Predictions</div>
+                </div>
+                <div style="text-align: center; flex: 1; min-width: 120px;">
+                    <div style="font-size: 1.5rem;">⚡</div>
+                    <div style="color: #64ffda; font-size: 0.75rem; font-weight: 600;">Energy Monitoring</div>
+                </div>
+                <div style="text-align: center; flex: 1; min-width: 120px;">
+                    <div style="font-size: 1.5rem;">🔧</div>
+                    <div style="color: #64ffda; font-size: 0.75rem; font-weight: 600;">Predictive Maintenance</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
         # Footer
         st.markdown("""
         <div style="text-align: center; margin-top: 40px; padding: 20px;">
             <p style="color: #555; font-size: 0.8rem;">
-                © 2026 TitanForge Industries | Enterprise IoT Platform v2.0
+                © 2026 TitanForge Industries | Enterprise IoT Platform v2.5
+            </p>
+            <p style="color: #444; font-size: 0.7rem; margin-top: 5px;">
+                🔒 256-bit SSL Encryption | SOC 2 Compliant | ISO 27001 Certified
             </p>
         </div>
         """, unsafe_allow_html=True)
@@ -483,6 +704,19 @@ if not st.session_state.authenticated:
 # ============================================
 # MAIN DASHBOARD (Only shown when authenticated)
 # ============================================
+
+# Session tracking
+if 'session_start' not in st.session_state:
+    st.session_state.session_start = datetime.now()
+    st.session_state.show_welcome = True
+else:
+    st.session_state.show_welcome = False
+
+# Calculate session duration
+session_duration = datetime.now() - st.session_state.session_start
+session_minutes = int(session_duration.total_seconds() // 60)
+session_hours = session_minutes // 60
+session_mins_display = session_minutes % 60
 
 # Initialize session state
 if 'data_generator' not in st.session_state:
@@ -518,6 +752,12 @@ if 'filter_severity' not in st.session_state:
 current_time_display = datetime.now().strftime('%B %d, %Y | %H:%M:%S')
 user_name = st.session_state.user_info["name"] if st.session_state.user_info else "User"
 user_role = st.session_state.user_info["role"] if st.session_state.user_info else ""
+
+# Welcome notification for new session
+if st.session_state.get('show_welcome', False):
+    st.toast(f"Welcome back, {user_name}! 🎉", icon="👋")
+    st.session_state.show_welcome = False
+
 st.markdown(f'''
 <div class="app-header">
     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
@@ -525,17 +765,18 @@ st.markdown(f'''
             <h1 class="app-title">🏭 TitanForge Industries</h1>
             <p class="app-subtitle">
                 <span class="live-indicator"></span>
-                Smart Manufacturing & IoT Analytics Platform
+                Smart Manufacturing & IoT Analytics Platform v2.5
             </p>
         </div>
         <div style="text-align: right;">
             <div style="color: #fff; font-size: 1rem; font-weight: 600;">👤 {user_name}</div>
             <div style="color: #64ffda; font-size: 0.8rem;">{user_role}</div>
+            <div style="color: #8892b0; font-size: 0.7rem; margin-top: 3px;">Session: {session_hours}h {session_mins_display}m</div>
         </div>
     </div>
-    <div style="display: flex; gap: 40px; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1);">
+    <div style="display: flex; gap: 40px; margin-top: 20px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap;">
         <div class="header-stat">
-            <div class="header-stat-value">●</div>
+            <div class="header-stat-value" style="color: #64ffda;">●</div>
             <div class="header-stat-label" style="color: #64ffda;">System Online</div>
         </div>
         <div class="header-stat">
@@ -545,6 +786,10 @@ st.markdown(f'''
         <div class="header-stat">
             <div class="header-stat-value">52</div>
             <div class="header-stat-label">Sensors Connected</div>
+        </div>
+        <div class="header-stat">
+            <div class="header-stat-value">99.7%</div>
+            <div class="header-stat-label">Uptime Today</div>
         </div>
         <div class="header-stat">
             <div class="header-stat-value">{current_time_display.split(' | ')[1]}</div>
@@ -851,6 +1096,70 @@ with status_col5:
         <div style="color: #8892b0; font-size: 0.75rem; margin-top: 5px;"><span class="live-indicator" style="width: 6px; height: 6px;"></span> Live</div>
     </div>
     ''', unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
+
+# Global Factory Locations Map
+with st.expander("🌍 Global Factory Network Overview", expanded=False):
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 20px; border-radius: 15px; margin-bottom: 15px;">
+        <h4 style="color: #64ffda; margin: 0 0 10px 0;">🏭 TitanForge Global Manufacturing Network</h4>
+        <p style="color: #8892b0; margin: 0; font-size: 0.9rem;">Real-time status from 4 manufacturing facilities worldwide</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Create world map with factory locations
+    factory_data = pd.DataFrame({
+        'facility': ['Detroit HQ', 'Munich Plant', 'Shanghai Facility', 'São Paulo Factory'],
+        'lat': [42.3314, 48.1351, 31.2304, -23.5505],
+        'lon': [-83.0458, 11.5820, 121.4737, -46.6333],
+        'status': ['Operational', 'Operational', 'Operational', 'Maintenance'],
+        'oee': [87.5, 91.2, 89.8, 72.3],
+        'production': [1250, 980, 1450, 620],
+        'employees': [450, 280, 520, 180]
+    })
+    
+    fig_map = px.scatter_geo(
+        factory_data,
+        lat='lat',
+        lon='lon',
+        size='production',
+        color='oee',
+        hover_name='facility',
+        hover_data={'lat': False, 'lon': False, 'status': True, 'oee': ':.1f', 'production': True, 'employees': True},
+        color_continuous_scale='RdYlGn',
+        range_color=[60, 100],
+        projection='natural earth',
+        title='Global Factory Status'
+    )
+    fig_map.update_layout(
+        height=400,
+        geo=dict(
+            bgcolor='rgba(0,0,0,0)',
+            landcolor='#1a1a2e',
+            oceancolor='#0f0c29',
+            showocean=True,
+            showcountries=True,
+            countrycolor='#333',
+            showlakes=False
+        ),
+        paper_bgcolor='rgba(0,0,0,0)',
+        margin=dict(l=0, r=0, t=40, b=0)
+    )
+    st.plotly_chart(fig_map, use_container_width=True)
+    
+    # Factory status cards
+    fcol1, fcol2, fcol3, fcol4 = st.columns(4)
+    for idx, (col, row) in enumerate(zip([fcol1, fcol2, fcol3, fcol4], factory_data.itertuples())):
+        status_color = '#64ffda' if row.status == 'Operational' else '#ffd93d'
+        with col:
+            st.markdown(f'''
+            <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 15px; border-radius: 12px; border-left: 4px solid {status_color};">
+                <div style="color: #fff; font-weight: 600; font-size: 0.95rem;">{row.facility}</div>
+                <div style="color: {status_color}; font-size: 0.8rem; margin: 5px 0;">● {row.status}</div>
+                <div style="color: #8892b0; font-size: 0.75rem;">OEE: {row.oee}% | Units: {row.production}</div>
+            </div>
+            ''', unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -1822,6 +2131,81 @@ with tab6:
         st.metric("Accuracy", "92.7%")
         st.metric("Precision", "89.4%")
         st.metric("Recall", "94.1%")
+    
+    # ML Pipeline Status Section
+    st.markdown("---")
+    st.markdown("#### 🔄 ML Pipeline Status")
+    
+    pipeline_col1, pipeline_col2 = st.columns(2)
+    
+    with pipeline_col1:
+        # Training History Chart
+        training_history = pd.DataFrame({
+            'epoch': list(range(1, 51)),
+            'train_loss': [0.8 * np.exp(-0.05 * x) + 0.1 + np.random.uniform(-0.02, 0.02) for x in range(50)],
+            'val_loss': [0.85 * np.exp(-0.045 * x) + 0.12 + np.random.uniform(-0.03, 0.03) for x in range(50)]
+        })
+        
+        fig_training = go.Figure()
+        fig_training.add_trace(go.Scatter(x=training_history['epoch'], y=training_history['train_loss'],
+                                          mode='lines', name='Training Loss', line=dict(color='#667eea', width=2)))
+        fig_training.add_trace(go.Scatter(x=training_history['epoch'], y=training_history['val_loss'],
+                                          mode='lines', name='Validation Loss', line=dict(color='#ff6b6b', width=2)))
+        fig_training.update_layout(
+            title='Model Training History',
+            xaxis_title='Epoch',
+            yaxis_title='Loss',
+            height=300,
+            margin=dict(l=30, r=30, t=50, b=30)
+        )
+        st.plotly_chart(fig_training, use_container_width=True)
+    
+    with pipeline_col2:
+        # Model Inference Latency
+        latency_data = pd.DataFrame({
+            'model': ['Predictive Maint.', 'Anomaly Detect.', 'Energy Forecast', 'Quality Predict'],
+            'latency_ms': [12.3, 8.7, 15.2, 10.5],
+            'throughput': [850, 1200, 680, 950]
+        })
+        
+        fig_latency = go.Figure()
+        fig_latency.add_trace(go.Bar(
+            x=latency_data['model'],
+            y=latency_data['latency_ms'],
+            name='Latency (ms)',
+            marker_color='#667eea'
+        ))
+        fig_latency.add_hline(y=20, line_dash="dash", line_color="red", annotation_text="SLA Threshold (20ms)")
+        fig_latency.update_layout(
+            title='Model Inference Latency',
+            yaxis_title='Latency (ms)',
+            height=300,
+            margin=dict(l=30, r=30, t=50, b=30)
+        )
+        st.plotly_chart(fig_latency, use_container_width=True)
+    
+    # Real-time AI Stats
+    st.markdown("---")
+    ai_stat_cols = st.columns(6)
+    
+    ai_stats = [
+        ("🧠", "Models Active", "4/4", "#64ffda"),
+        ("📊", "Predictions Today", f"{np.random.randint(45000, 55000):,}", "#667eea"),
+        ("⚡", "Avg Latency", "11.7ms", "#00C851"),
+        ("🎯", "Overall Accuracy", "94.6%", "#764ba2"),
+        ("📈", "Data Processed", "2.4 TB", "#f093fb"),
+        ("🔄", "Last Retrain", "2h ago", "#ffd93d")
+    ]
+    
+    for idx, (icon, label, value, color) in enumerate(ai_stats):
+        with ai_stat_cols[idx]:
+            st.markdown(f'''
+            <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 15px; border-radius: 12px; text-align: center; border-top: 3px solid {color};">
+                <div style="font-size: 1.5rem;">{icon}</div>
+                <div style="color: {color}; font-size: 1.2rem; font-weight: 700;">{value}</div>
+                <div style="color: #8892b0; font-size: 0.7rem; text-transform: uppercase;">{label}</div>
+            </div>
+            ''', unsafe_allow_html=True)
 
 # Tab 7: AI Assistant Chatbot
 with tab7:
