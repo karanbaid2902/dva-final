@@ -2270,29 +2270,21 @@ with tab7:
     if not st.session_state.chat_messages:
         st.info("👋 Hello! I'm your AI manufacturing assistant. Ask me about OEE, energy, quality, production, maintenance, or any operational questions!")
     else:
-        # Create scrollable chat container
-        chat_html = '<div style="max-height: 400px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 10px; background-color: #fafafa;">'
+        # Display chat messages using Streamlit components
         for idx, message in enumerate(st.session_state.chat_messages):
             if message["role"] == "user":
-                chat_html += f'''
+                st.markdown(f'''
                 <div style="background-color: #e3f2fd; padding: 12px 15px; border-radius: 15px; margin: 8px 0; border-left: 4px solid #2196F3;">
                     <strong>👤 You:</strong><br>{message["content"]}
                 </div>
-                '''
+                ''', unsafe_allow_html=True)
             else:
-                chat_html += f'''
+                st.markdown(f'''
                 <div style="background-color: #f5f5f5; padding: 12px 15px; border-radius: 15px; margin: 8px 0; border-left: 4px solid #00C851;">
-                    <strong>🤖 AI Assistant:</strong><br>
+                    <strong>🤖 AI Assistant:</strong>
                 </div>
-                '''
-        chat_html += '</div>'
-        st.markdown(chat_html, unsafe_allow_html=True)
-        
-        # Display assistant content separately for markdown rendering
-        for idx, message in enumerate(st.session_state.chat_messages):
-            if message["role"] == "assistant":
-                with st.expander(f"📝 Response {(idx//2)+1}", expanded=True):
-                    st.markdown(message["content"])
+                ''', unsafe_allow_html=True)
+                st.markdown(message["content"])
     
     st.markdown("---")
     
